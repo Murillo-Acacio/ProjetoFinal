@@ -19,7 +19,8 @@ altura = 450
 screen = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('Projeto Final')
 
-background = load_imagem("sprites/background-menu(800:450).jpg")
+global knight
+background = load_imagem("sprites/battle.jpg")
 knight = load_imagem("sprites/Knight/knight.png")
 
 run = init = True
@@ -36,6 +37,11 @@ counter, text = 180000, ' 03:00'.rjust(3) # 3 minutos equivale a 180.000 miliseg
 # Não lembro pq coloquei em milisegundos mas ta funcionando !!!! hehe
 
 x, y = 0, 300 # posição inicial do personagem
+x_speed = y_speed = 3
+ViraVira = 1
+lado = 1
+
+pressed_up = pressed_down = pressed_left = pressed_right = False
 
 while run:
 
@@ -61,22 +67,54 @@ while run:
         # aqui ele verifica se alguma tecla foi pressionado e muda a coordenada
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                y -= 20
+                pressed_up = True
             if event.key == pygame.K_DOWN:
-                y += 20
+                pressed_down = True
             if event.key == pygame.K_LEFT:
-                x -= 20
+                pressed_left = True
+                if lado == 1:
+                    ViraVira = -1
+                    lado = -1
             if event.key == pygame.K_RIGHT:
-                x += 20
+                pressed_right = True
+                if lado == -1:
+                    ViraVira = -1
+                    lado = 1
+
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_UP:
+                pressed_up = False
+            if event.key == pygame.K_DOWN:
+                pressed_down = False
+            if event.key == pygame.K_LEFT:
+                pressed_left = False
+            if event.key == pygame.K_RIGHT:
+                pressed_right = False
 
         # aqui ele sai do loop quando aperta no "X"
         if event.type == pygame.QUIT:
             run = False
 
+    if pressed_up:
+        y -= y_speed
+    if pressed_down:
+        y += y_speed
+    if pressed_left:
+        x -= x_speed
+    if pressed_right:
+        x += x_speed
+
+    if ViraVira == -1:
+        knight = pygame.transform.flip(knight, True, False)
+    elif ViraVira == 1:
+        knight = pygame.transform.flip(knight, False, False)
+    
+    ViraVira = 1
+
     redraw_background() # redesenhando a tela de fundo
     redraw_knight(x, y) # redesenhando o personagem na posição (x, y)
 
-    screen.blit(font.render(text, True, WHITE), [600, 0]) # desenhando o cronometro na tela
+    screen.blit(font.render(text, True, WHITE), [600, 0]) # desenhando o cronometro na tela na posição (600, 0)
 
     pygame.display.flip() # Atualizando a tela
     clock.tick(60) # aqui eu garanto que o programa fique rodando a 60 fps (ui que xiqui !!)
