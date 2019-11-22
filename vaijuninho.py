@@ -1,6 +1,6 @@
 import pygame
 import sprites
-from all_sprites import *
+from all_spritess import *
 pygame.init()
 
 
