@@ -17,11 +17,11 @@ def redraw_knight(x, y):
     screen.blit(knight, (x, y))
 
 
-def change_sprite(tipo, posição):
-    knight = load_imagem(tipo[posição])
+def change_sprite(ação, frame):
+    knight = load_imagem(ação[frame])
     return knight
-# tipo: se refere a tipo de ação ou a própria lista de movimento
-# posição: referente ao numero do sprite
+# ação: se refere ao tipo de ação da lista de movimentos
+# frame: referente ao numero do sprite no dicionario
 
 largura = 800
 altura = 450
@@ -44,7 +44,7 @@ x, y = 0, 300  # posição inicial do personagem
 x_speed = y_speed = 2
 move_sprite = ViraVira = False
 lado = "right"
-pos = 0
+frame = 0
 
 pressed_up = pressed_down = pressed_left = pressed_right = False
 
@@ -116,17 +116,16 @@ while run:
             lado = "right"
         move_sprite = True
 
-
-    if move_sprite == True:  # verifica se teve movimento
-        if pos == 48:
-            pos = 0
-            knight = change_sprite(sprite_walk, pos)
+    if move_sprite == True:  # verifica se teve movimento 
+        if frame == 48:
+            frame = 0
         else:
-            if pos % 8 == 0:
-                knight = change_sprite(sprite_walk, pos)
-            pos += 1
+            if frame % 8 == 0 or frame == 0:
+                knight = change_sprite(sprite_walk, frame)
+                if lado == "left":
+                    knight = pygame.transform.flip(knight, True, False)
+            frame += 1
     move_sprite = False
-
 
     if ViraVira == True:
         knight = pygame.transform.flip(knight, True, False)
