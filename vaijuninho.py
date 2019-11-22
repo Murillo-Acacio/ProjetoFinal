@@ -1,68 +1,73 @@
 import pygame
+import sprites
+from all_sprites import *
 pygame.init()
 
-def redraw_background():
-    screen.blit(background, (0, 0))
 
 # função pra facilitar o carregamento da imagem
 def load_imagem(caminho):
     return pygame.image.load(caminho).convert_alpha()
 
+
+def redraw_background():
+    screen.blit(background, (0, 0))
+
+
 def redraw_knight(x, y):
     screen.blit(knight, (x, y))
 
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
+
+def change_sprite(tipo, posição):
+    knight = load_imagem(tipo[posição])
+    return knight
+# tipo: se refere a tipo de ação ou a própria lista de movimento
+# posição: referente ao numero do sprite
 
 largura = 800
 altura = 450
 screen = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('Projeto Final')
 
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+
 global knight
-background = load_imagem("sprites/battle.jpg")
-knight = load_imagem("sprites/Knight/knight.png")
+knight = load_imagem(s_inicial)
+background = load_imagem(s_background)
 
-run = init = True
-
-# aqui eu estou setando um tempo de 1000 milisegundos para esse evento
-# ser chamado a cada segundo
 pygame.time.set_timer(pygame.USEREVENT, 1000)
-
-# aqui eu defino uma fonte
 font = pygame.font.SysFont(None, 55)
-
 clock = pygame.time.Clock()
-counter, text = 180000, ' 03:00'.rjust(3) # 3 minutos equivale a 180.000 milisegundos
-# Não lembro pq coloquei em milisegundos mas ta funcionando !!!! hehe
+counter, text = 180000, ' 03:00'.rjust(3)
 
-x, y = 0, 300 # posição inicial do personagem
-x_speed = y_speed = 3
-ViraVira = 1
-lado = 1
+x, y = 0, 300  # posição inicial do personagem
+x_speed = y_speed = 2
+move_sprite = ViraVira = False
+lado = "right"
+pos = 0
 
 pressed_up = pressed_down = pressed_left = pressed_right = False
+
+run = init = True
 
 while run:
 
     for event in pygame.event.get():
-        if event.type == pygame.USEREVENT: # esse evento acontece ao decorrer de 1 segundo
-            counter -= 1000 # retiro 1 segundo
+        if event.type == pygame.USEREVENT:
+            counter -= 1000
             if counter >= 0:
-                # convertendo para o formato mm:ss
                 minutos = int(counter/60000)
                 segundos = int((counter/1000)-minutos*60)
 
                 minutos = str(minutos)
                 segundos = str(segundos)
 
-                if len(segundos) == 1: # aqui se for um numero de 0 a 9 ele coloca um zero na frente pra ficar bunitin
+                if len(segundos) == 1:
                     segundos = '0'+segundos
                 text = '0'+minutos+":"+segundos
             else:
-                # aqui se o tempo acabar e ainda tiver vidas ele ganha sei la
                 text = 'boom!'
-                counter = 180000 # botei isso aqui so pra ficar em um loop bunitin mas não vai ficar assim
+                counter = 180000
 
         # aqui ele verifica se alguma tecla foi pressionado e muda a coordenada
         if event.type == pygame.KEYDOWN:
@@ -72,14 +77,8 @@ while run:
                 pressed_down = True
             if event.key == pygame.K_LEFT:
                 pressed_left = True
-                if lado == 1:
-                    ViraVira = -1
-                    lado = -1
             if event.key == pygame.K_RIGHT:
                 pressed_right = True
-                if lado == -1:
-                    ViraVira = -1
-                    lado = 1
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
@@ -97,26 +96,48 @@ while run:
 
     if pressed_up:
         y -= y_speed
+        move_sprite = True
+
     if pressed_down:
         y += y_speed
+        move_sprite = True
+
     if pressed_left:
         x -= x_speed
+        if lado == "right":
+            ViraVira = True
+            lado = "left"
+        move_sprite = True
+
     if pressed_right:
         x += x_speed
+        if lado == "left":
+            ViraVira = True
+            lado = "right"
+        move_sprite = True
 
-    if ViraVira == -1:
+
+    if move_sprite == True:  # verifica se teve movimento
+        if pos == 48:
+            pos = 0
+            knight = change_sprite(sprite_walk, pos)
+        else:
+            if pos % 8 == 0:
+                knight = change_sprite(sprite_walk, pos)
+            pos += 1
+    move_sprite = False
+
+
+    if ViraVira == True:
         knight = pygame.transform.flip(knight, True, False)
-    elif ViraVira == 1:
-        knight = pygame.transform.flip(knight, False, False)
-    
-    ViraVira = 1
+        ViraVira = False
 
-    redraw_background() # redesenhando a tela de fundo
-    redraw_knight(x, y) # redesenhando o personagem na posição (x, y)
+    redraw_background()  # redesenhando a tela de fundo
+    redraw_knight(x, y)  # redesenhando o personagem na posição (x, y)
 
-    screen.blit(font.render(text, True, WHITE), [600, 0]) # desenhando o cronometro na tela na posição (600, 0)
+    screen.blit(font.render(text, True, WHITE), [600, 0])  # desenhando o cronometro na tela na posição (600, 0)
 
-    pygame.display.flip() # Atualizando a tela
-    clock.tick(60) # aqui eu garanto que o programa fique rodando a 60 fps (ui que xiqui !!)
+    pygame.display.flip()  # Atualizando a tela
+    clock.tick(60)  # aqui eu garanto que o programa fique rodando a 60 fps
 
 pygame.quit()
