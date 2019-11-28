@@ -15,9 +15,9 @@ sprite_walk = {
 
 sprite_attack = {
     0: caminho+"Attack/attack0.png",
-    1: caminho+"Attack/attack1.png",
-    2: caminho+"Attack/attack2.png",
-    3: caminho+"Attack/attack4.png"
+    8: caminho+"Attack/attack1.png",
+    16: caminho+"Attack/attack2.png",
+    24: caminho+"Attack/attack4.png"
 }
 
 sprite_death = {

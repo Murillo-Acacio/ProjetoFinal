@@ -17,11 +17,13 @@ def redraw_knight(x, y):
     screen.blit(knight, (x, y))
 
 
-def change_sprite(ação, frame):
-    knight = load_imagem(ação[frame])
+def change_sprite(ação, pos):
+    # print(f'dic {ação[pos]} e pos {pos}')
+    knight = load_imagem(ação[pos])
     return knight
-# ação: se refere ao tipo de ação da lista de movimentos
-# frame: referente ao numero do sprite no dicionario
+# ação: se refere ao tipo de ação no "all_spritess"
+# pos: referente ao numero do sprite no dicionario
+
 
 largura = 800
 altura = 450
@@ -45,8 +47,9 @@ x_speed = y_speed = 2
 move_sprite = ViraVira = False
 lado = "right"
 frame = 0
+f_attack = 0
 
-pressed_up = pressed_down = pressed_left = pressed_right = False
+pressed_up = pressed_down = pressed_left = pressed_right = pressed_attack = False
 
 run = init = True
 
@@ -79,6 +82,8 @@ while run:
                 pressed_left = True
             if event.key == pygame.K_RIGHT:
                 pressed_right = True
+            if event.key == pygame.K_z:
+                pressed_attack = True
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
@@ -94,29 +99,30 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-    if pressed_up:
-        y -= y_speed
-        move_sprite = True
+    if pressed_attack is False:
+        if pressed_up:
+            y -= y_speed
+            move_sprite = True
 
-    if pressed_down:
-        y += y_speed
-        move_sprite = True
+        if pressed_down:
+            y += y_speed
+            move_sprite = True
 
-    if pressed_left:
-        x -= x_speed
-        if lado == "right":
-            ViraVira = True
-            lado = "left"
-        move_sprite = True
+        if pressed_left:
+            x -= x_speed
+            if lado == "right":
+                ViraVira = True
+                lado = "left"
+            move_sprite = True
 
-    if pressed_right:
-        x += x_speed
-        if lado == "left":
-            ViraVira = True
-            lado = "right"
-        move_sprite = True
+        elif pressed_right:
+            x += x_speed
+            if lado == "left":
+                ViraVira = True
+                lado = "right"
+            move_sprite = True
 
-    if move_sprite == True:  # verifica se teve movimento 
+    if move_sprite is True:  # verifica se teve movimento
         if frame == 48:
             frame = 0
         else:
@@ -127,9 +133,27 @@ while run:
             frame += 1
     move_sprite = False
 
-    if ViraVira == True:
+    if ViraVira is True:
         knight = pygame.transform.flip(knight, True, False)
+        if lado == "right":
+            x += 25
+        if lado == "left":
+            x -= 25
         ViraVira = False
+
+    if pressed_attack is True:
+        if f_attack == 32:
+            f_attack = 0
+            pressed_attack = False
+            knight = load_imagem(s_inicial)
+            if lado == "left":
+                knight = pygame.transform.flip(knight, True, False)
+        else:
+            if f_attack % 8 == 0 or f_attack == 0:
+                knight = change_sprite(sprite_attack, f_attack)
+                if lado == "left":
+                    knight = pygame.transform.flip(knight, True, False)
+            f_attack += 1
 
     redraw_background()  # redesenhando a tela de fundo
     redraw_knight(x, y)  # redesenhando o personagem na posição (x, y)
