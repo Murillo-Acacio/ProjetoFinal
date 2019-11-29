@@ -34,11 +34,13 @@ def game():
     knight = load_imagem(s_inicial)
     background = load_imagem(s_background_game)
     button_back = load_imagem(s_back)
+    pygame.mouse. set_visible(False)
+    cursor = load_imagem(s_cursor)
 
     pygame.time.set_timer(pygame.USEREVENT, 1000)
-    font = pygame.font.SysFont(None, 55)
+    font = pygame.font.SysFont('couriernew', 55)
     clock = pygame.time.Clock()
-    counter, text = 180000, ' 03:00'.rjust(3)
+    counter, text = 180000, '03:00'.rjust(3)
 
     x, y = 0, 220  # posição inicial do personagem
     x_speed = y_speed = 2
@@ -169,6 +171,10 @@ def game():
 
         screen.blit(font.render(text, True, WHITE), [600, 0])  # desenhando o cronometro na tela na posição (600, 0)
         screen.blit(button_back, [0, 0])
+
+        if pygame.mouse. get_focused():
+            mouse = pygame.mouse.get_pos()
+            screen.blit(cursor, mouse)
 
         pygame.display.flip()  # Atualizando a tela
         clock.tick(60)  # aqui eu garanto que o programa fique rodando a 60 fps

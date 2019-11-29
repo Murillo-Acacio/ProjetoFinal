@@ -16,6 +16,16 @@ def load_imagem(image):
     return pygame.image.load(image).convert_alpha()
 
 
+def redraw_knight(x, y):
+    screen.blit(knight, (x, y))
+
+
+global knight
+knight = load_imagem(sprite_idle[0])
+frame = 0
+
+pygame.mouse. set_visible(False)
+cursor = load_imagem(s_cursor)
 button_play = load_imagem(s_play)
 button_credits = load_imagem(s_credits)
 back_menu = load_imagem(s_background_menu)
@@ -61,6 +71,19 @@ while run:
                 run_credits()
         button_pressed = False
 
+    if frame == 96:
+        frame = 0
+    if frame >= 0:
+        if frame % 8 == 0 or frame == 0:
+            knight = load_imagem(sprite_idle[frame])
+        frame += 1
+    
+    redraw_knight(50, 300)
+
+    if pygame.mouse. get_focused():
+        mouse = pygame.mouse.get_pos()
+        screen.blit(cursor, mouse)
+    
     pygame.display.flip()
     clock.tick(60)
 
