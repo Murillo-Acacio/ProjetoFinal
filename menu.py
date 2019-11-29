@@ -1,5 +1,8 @@
-import pygame
+from vaijuninho import game
+from show_credits import run_credits
+from all_spritess import *
 import sprites
+import pygame
 pygame.init()
 
 width = 800
@@ -7,52 +10,58 @@ height = 450
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Projeto Final')
 
+
 # função pra facilitar o carregamento da imagem
 def load_imagem(image):
     return pygame.image.load(image).convert_alpha()
 
-button_play = load_imagem("sprites/play.png")
 
-button_credits = load_imagem("sprites/credits.png")
+button_play = load_imagem(s_play)
+button_credits = load_imagem(s_credits)
+back_menu = load_imagem(s_background_menu)
 
-back_menu = load_imagem("sprites/background.jpg")
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-# aqui eu estou setando um tempo de 1000 milisegundos para esse evento
-# ser chamado a cada segundo
-# pygame.time.set_timer(pygame.USEREVENT, 1000)
-
-# aqui eu defino uma fonte
-# font = pygame.font.SysFont(None, 55)
-
-#3 minutos equivale a 180.000 milisegundos
 clock = pygame.time.Clock()
-# counter, text = 180000, ' 03:00'.rjust(3)
 
 
-def menu(screen):
-	global play_press, credits_press
+def menu():
+    global play_press, credits_press
+    screen.blit(back_menu, (0, 0))
+    play_press = screen.blit(button_play, (300, 200))
+    credits_press = screen.blit(button_credits, (285, 350))
 
-	screen.blit(back_menu, (0,0))
-	play_press = screen.blit(button_play, (300, 200))
-	credits_press = screen.blit(button_credits, (285, 350))
 
 run = True
 initial = True
+button_pressed = False
 
 while run:
 
     if initial:
-        menu(screen)
+        menu()
 
     for event in pygame.event.get():
-        # aqui ele sai do loop quando aperta no "X"
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            button_pressed = True
+
         if event.type == pygame.QUIT:
             run = False
 
-    pygame.display.flip() # Atualizando a tela
-    clock.tick(60) # aqui eu garanto que o programa fique rodando a 60 fps (ui que xiqui !!)
+    if button_pressed: # aqui eu verifico se o play foi
+        mouse = pygame.mouse.get_pos()
+        if mouse[0] > 314 and mouse[0] < 481:
+            if mouse[1] > 214 and mouse[1] < 274:
+                game()
+        if mouse[0] > 294 and mouse[0] < 502:
+            if mouse[1] > 361 and mouse[1] < 407:
+                run_credits()
+        button_pressed = False
+
+    pygame.display.flip()
+    clock.tick(60)
 
 pygame.quit()
