@@ -29,6 +29,7 @@ cursor = load_imagem(s_cursor)
 button_play = load_imagem(s_play)
 button_credits = load_imagem(s_credits)
 back_menu = load_imagem(s_background_menu)
+name_game = load_imagem(n_game)
 
 
 WHITE = (255, 255, 255)
@@ -42,6 +43,7 @@ def menu():
     screen.blit(back_menu, (0, 0))
     play_press = screen.blit(button_play, (300, 200))
     credits_press = screen.blit(button_credits, (285, 350))
+    screen.blit(name_game, (200, 50))
 
 
 run = True

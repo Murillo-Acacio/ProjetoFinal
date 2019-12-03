@@ -1,5 +1,7 @@
 caminho = "sprites/Knight/"
 
+n_game = "sprites/name.png"
+
 s_background_game = "sprites/battle.jpg"
 s_background_menu = "sprites/background.jpg"
 s_background_credits = "sprites/background_credits.jpg"

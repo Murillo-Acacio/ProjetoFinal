@@ -14,7 +14,6 @@ def run_credits():
     width = 800
     height = 450
     screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption('Projeto Final')
 
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
