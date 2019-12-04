@@ -6,9 +6,13 @@ pygame.init()
 
 def game():
 
+    global lifes
+
+    lifes = 3
+
     # função pra facilitar o carregamento da imagem
-    def load_imagem(caminho):
-        return pygame.image.load(caminho).convert_alpha()
+    def load_image(way):
+        return pygame.image.load(way).convert_alpha()
 
     def redraw_background():
         screen.blit(background, (0, 0))
@@ -16,36 +20,46 @@ def game():
     def redraw_knight(x, y):
         screen.blit(knight, (x, y))
 
-    def change_sprite(ação, pos):
-        knight = load_imagem(ação[pos])
+    def change_sprite(action, pos):
+        knight = load_image(action[pos])
         return knight
     # ação: se refere ao tipo de ação no "all_spritess"
     # pos: referente ao numero do sprite no dicionario
 
-    largura = 800
-    altura = 450
-    screen = pygame.display.set_mode((largura, altura))
+    width = 800
+    height = 450
+    screen = pygame.display.set_mode((width, height))
 
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
 
     global knight
-    knight = load_imagem(s_inicial)
-    background = load_imagem(s_background_game)
-    button_back = load_imagem(s_back)
+    knight = load_image(s_inicial)
+
+    global inimigo
+    inimigo = load_image(sprite_golem_walk[1])
+
+    list_inimigo = [inimigo]
+    ind_inimigo = [8]
+    pos_inimigo = [(400, 300)]
+    qtd_inimigos = 0
+
+    background = load_image(s_background_game)
+    button_back = load_image(s_back)
     pygame.mouse. set_visible(False)
-    cursor = load_imagem(s_cursor)
+    cursor = load_image(s_cursor)
+    life = load_image(s_life)
 
     pygame.time.set_timer(pygame.USEREVENT, 1000)
     font = pygame.font.SysFont('couriernew', 55)
     clock = pygame.time.Clock()
-    counter, text = 180000, '03:00'.rjust(3)
+    counter, text = 120000, '02:00'.rjust(3)
 
     x, y = 0, 220  # posição inicial do personagem
     x_speed = y_speed = 2
-    move_sprite = ViraVira = False
-    lado = "right"
-    frame = 0
+    move_sprite = turn = False
+    side = "right"
+    frame = 8
     f_attack = 0
 
     pressed_up = pressed_down = pressed_left = pressed_right = pressed_attack = False
@@ -53,24 +67,25 @@ def game():
 
     run = init = True
 
-    while run:
 
+    while run:
+        
         for event in pygame.event.get():
             if event.type == pygame.USEREVENT:
                 counter -= 1000
                 if counter >= 0:
-                    minutos = int(counter/60000)
-                    segundos = int((counter/1000)-minutos*60)
+                    minutes = int(counter/60000)
+                    seconds = int((counter/1000)-minutes*60)
 
-                    minutos = str(minutos)
-                    segundos = str(segundos)
+                    minutes = str(minutes)
+                    seconds = str(seconds)
 
-                    if len(segundos) == 1:
-                        segundos = '0'+segundos
-                    text = '0'+minutos+":"+segundos
+                    if len(seconds) == 1:
+                        seconds = '0'+seconds
+                    text = '0'+minutes+":"+seconds
                 else:
                     text = 'boom!'
-                    counter = 180000
+                    counter = 120000
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pressed = True
@@ -104,8 +119,8 @@ def game():
 
         if mouse_pressed is True:
             mouse = pygame.mouse. get_pos()
-            if mouse[0] > 20 and mouse[0] < 100:
-                if mouse[1] > 21 and mouse[1] < 48:
+            if mouse[0] > 14 and mouse[0] < 95:
+                if mouse[1] > 395 and mouse[1] < 426:
                     run = False
             mouse_pressed = False
 
@@ -120,56 +135,82 @@ def game():
 
             if pressed_left:
                 x -= x_speed
-                if lado == "right":
-                    ViraVira = True
-                    lado = "left"
+                if side == "right":
+                    turn = True
+                    side = "left"
                 move_sprite = True
 
             elif pressed_right:
                 x += x_speed
-                if lado == "left":
-                    ViraVira = True
-                    lado = "right"
+                if side == "left":
+                    turn = True
+                    side = "right"
                 move_sprite = True
+
+        if turn is True:
+            knight = pygame.transform.flip(knight, True, False)
+            if side == "right":
+                x += 49
+            if side == "left":
+                x -= 49
+            turn = False
 
         if move_sprite is True:  # verifica se teve movimento
             if frame == 48:
-                frame = 0
+                frame = 8
             else:
-                if frame % 8 == 0 or frame == 0:
-                    knight = change_sprite(sprite_walk, frame)
-                    if lado == "left":
+                if frame % 8 == 0:
+                    knight = change_sprite(sprite_walk, int (frame/8))
+                    if side == "left":
                         knight = pygame.transform.flip(knight, True, False)
                 frame += 1
         move_sprite = False
-
-        if ViraVira is True:
-            knight = pygame.transform.flip(knight, True, False)
-            if lado == "right":
-                x += 25
-            if lado == "left":
-                x -= 25
-            ViraVira = False
 
         if pressed_attack is True:
             if f_attack == 32:
                 f_attack = 0
                 pressed_attack = False
-                knight = load_imagem(s_inicial)
-                if lado == "left":
+                knight = load_image(s_inicial)
+                if side == "left":
                     knight = pygame.transform.flip(knight, True, False)
             else:
                 if f_attack % 8 == 0 or f_attack == 0:
                     knight = change_sprite(sprite_attack, f_attack)
-                    if lado == "left":
+                    if side == "left":
                         knight = pygame.transform.flip(knight, True, False)
                 f_attack += 1
 
+        for i in range(len(list_inimigo)):
+            if ind_inimigo[i] == 48:
+                ind_inimigo[i] = 8
+            if ind_inimigo[i] >= 8:
+                if ind_inimigo[i] % 8 == 0:
+                    list_inimigo[i] = load_image(sprite_golem_walk[int (ind_inimigo[i]/8)])
+                ind_inimigo[i] += 1
+
         redraw_background()  # redesenhando a tela de fundo
         redraw_knight(x, y)  # redesenhando o personagem na posição (x, y)
-
+        
         screen.blit(font.render(text, True, WHITE), [600, 0])  # desenhando o cronometro na tela na posição (600, 0)
-        screen.blit(button_back, [0, 0])
+
+        l1 = life
+        l2 = life
+        l3 = life
+
+        list_life = [l1, l2, l3]
+
+        pos = 1
+        a = 0 
+        screen.blit(list_life[0], [0, 0])
+
+        for pos in range(len(list_life) - 1):
+            a = a + 65
+            screen.blit(list_life[pos], [a, 0])
+        
+        screen.blit(button_back, [0, 381])
+
+        for i in range(len(pos_inimigo)):
+            screen.blit(list_inimigo[i], pos_inimigo[i])
 
         if pygame.mouse. get_focused():
             mouse = pygame.mouse.get_pos()

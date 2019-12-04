@@ -5,8 +5,8 @@ pygame.init()
 def run_credits():
 
     # função pra facilitar o carregamento da imagem
-    def load_imagem(caminho):
-        return pygame.image.load(caminho).convert_alpha()
+    def load_image(image):
+        return pygame.image.load(image).convert_alpha()
 
     def redraw_background():
         screen.blit(background, (0, 0))
@@ -18,16 +18,16 @@ def run_credits():
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
 
-    background = load_imagem(s_background_menu)
-    button_back = load_imagem(s_back)
+    background = load_image(s_background_menu)
+    button_back = load_image(s_back)
     pygame.mouse. set_visible(False)
-    cursor = load_imagem(s_cursor)
+    cursor = load_image(s_cursor)
 
-    font = pygame.font.SysFont(None, 50)
+    font = pygame.font.SysFont(None, 23)
 
-    arquivo = open('credi.txt', 'r')
-    text = arquivo.readlines()
-    arquivo.close()
+    archive = open('credi.txt', 'r')
+    text = archive.readlines()
+    archive.close()
 
     run = True
     mouse_pressed = False
@@ -48,10 +48,15 @@ def run_credits():
                     run = False
             mouse_pressed = False
         
-        redraw_background()
+        screen.fill(BLACK) # deixa o fundo preto
 
-        for i in range(len(text)):
-            screen.blit(font.render(text[i], True, BLACK), [70, (100 + i*40)])
+        if height < -480:
+            height = 450
+
+        if (height > -480):
+            for i in range(len(text)):
+                screen.blit(font.render(text[i], True, WHITE), [150, (height + 20 + (i*40))])
+            height -= 0.05
 
         screen.blit(button_back, [0, 0])
 

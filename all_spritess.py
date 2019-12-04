@@ -1,4 +1,7 @@
-caminho = "sprites/Knight/"
+way = "sprites/Knight/"
+way2 = "sprites/golems/"
+
+s_life = "sprites/life.png"
 
 n_game = "sprites/name.png"
 
@@ -12,48 +15,57 @@ s_back = "sprites/back.png"
 
 s_cursor = "sprites/cursor.png"
 
-s_inicial = caminho+"knight.png"
+s_inicial = way+"knight.png"
 
 sprite_walk = {
-    0: caminho+"Walk/walk1.png",
-    8: caminho+"Walk/walk2.png",
-    16: caminho+"Walk/walk3.png",
-    24: caminho+"Walk/walk4.png",
-    32: caminho+"Walk/walk5.png",
-    40: caminho+"Walk/walk6.png"
+    1: way+"Walk/walk1.png",
+    2: way+"Walk/walk2.png",
+    3: way+"Walk/walk3.png",
+    4: way+"Walk/walk4.png",
+    5: way+"Walk/walk5.png",
+    6: way+"Walk/walk6.png"
 }
 
 sprite_attack = {
-    0: caminho+"Attack/attack0.png",
-    8: caminho+"Attack/attack1.png",
-    16: caminho+"Attack/attack2.png",
-    24: caminho+"Attack/attack4.png"
+    0: way+"Attack/attack0.png",
+    8: way+"Attack/attack1.png",
+    16: way+"Attack/attack2.png",
+    24: way+"Attack/attack4.png"
 }
 
 sprite_death = {
-    0: caminho+"death1.png",
-    1: caminho+"death2.png",
-    2: caminho+"death3.png",
-    3: caminho+"death4.png",
-    4: caminho+"death5.png",
-    5: caminho+"death6.png",
-    6: caminho+"death7.png",
-    7: caminho+"death8.png",
-    8: caminho+"death9.png",
-    9: caminho+"death10.png"
+    1: way+"death1.png",
+    2: way+"death2.png",
+    3: way+"death3.png",
+    4: way+"death4.png",
+    5: way+"death5.png",
+    6: way+"death6.png",
+    7: way+"death7.png",
+    8: way+"death8.png",
+    9: way+"death9.png",
+    10: way+"death10.png"
 }
 
 sprite_idle = {
-    0: caminho+"Idle/idle1.png",
-    8: caminho+"Idle/idle2.png",
-    16: caminho+"Idle/idle3.png",
-    24: caminho+"Idle/idle4.png",
-    32: caminho+"Idle/idle5.png",
-    40: caminho+"Idle/idle6.png",
-    48: caminho+"Idle/idle7.png",
-    56: caminho+"Idle/idle8.png",
-    64: caminho+"Idle/idle9.png",
-    72: caminho+"Idle/idle10.png",
-    80: caminho+"Idle/idle11.png",
-    88: caminho+"Idle/idle12.png",
+    1: way+"Idle/idle1.png",
+    2: way+"Idle/idle2.png",
+    3: way+"Idle/idle3.png",
+    4: way+"Idle/idle4.png",
+    5: way+"Idle/idle5.png",
+    6: way+"Idle/idle6.png",
+    7: way+"Idle/idle7.png",
+    8: way+"Idle/idle8.png",
+    9: way+"Idle/idle9.png",
+    10: way+"Idle/idle10.png",
+    11: way+"Idle/idle11.png",
+    12: way+"Idle/idle12.png",
+}
+
+sprite_golem_walk = {
+    1: way2+"golem1/Walking/0_Golem_Walking_004.png",
+    2: way2+"golem1/Walking/0_Golem_Walking_008.png",
+    3: way2+"golem1/Walking/0_Golem_Walking_012.png",
+    4: way2+"golem1/Walking/0_Golem_Walking_016.png",
+    5: way2+"golem1/Walking/0_Golem_Walking_020.png",
+    6: way2+"golem1/Walking/0_Golem_Walking_023.png",
 }
