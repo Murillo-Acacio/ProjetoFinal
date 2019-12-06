@@ -22,6 +22,9 @@ def run_credits():
     button_back = load_image(s_back)
     pygame.mouse. set_visible(False)
     cursor = load_image(s_cursor)
+    muri = load_image(murillo)
+    fer = load_image(fernanda)
+    van = load_image(vanessa)
 
     font = pygame.font.SysFont(None, 23)
 
@@ -40,6 +43,7 @@ def run_credits():
 
             if event.type == pygame.QUIT:
                 run = False
+                pygame.quit()
 
         if mouse_pressed is True:
             mouse = pygame.mouse. get_pos()
@@ -50,13 +54,16 @@ def run_credits():
         
         screen.fill(BLACK) # deixa o fundo preto
 
-        if height < -480:
+        if height < -680:
             height = 450
 
-        if (height > -480):
+        if (height > -680):
             for i in range(len(text)):
                 screen.blit(font.render(text[i], True, WHITE), [150, (height + 20 + (i*40))])
-            height -= 0.05
+            screen.blit(muri, [130, (height + 550)])
+            screen.blit(fer, [350, (height + 550)])
+            screen.blit(van, [570, (height + 550)])
+            height -= 0.1
 
         screen.blit(button_back, [0, 0])
 

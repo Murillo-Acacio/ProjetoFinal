@@ -1,9 +1,16 @@
+murillo = "sprites/developers/murillo2.jpeg"
+fernanda = "sprites/developers/fernanda.jpeg"
+vanessa = "sprites/developers/vanessa.jpeg"
+
 way = "sprites/Knight/"
 way2 = "sprites/golems/"
 
 s_life = "sprites/life.png"
 
 n_game = "sprites/name.png"
+
+win = "sprites/win.png"
+defeat = "sprites/lost.png"
 
 s_background_game = "sprites/battle.jpg"
 s_background_menu = "sprites/background.jpg"
@@ -62,10 +69,25 @@ sprite_idle = {
 }
 
 sprite_golem_walk = {
-    1: way2+"golem1/Walking/0_Golem_Walking_004.png",
-    2: way2+"golem1/Walking/0_Golem_Walking_008.png",
-    3: way2+"golem1/Walking/0_Golem_Walking_012.png",
-    4: way2+"golem1/Walking/0_Golem_Walking_016.png",
-    5: way2+"golem1/Walking/0_Golem_Walking_020.png",
-    6: way2+"golem1/Walking/0_Golem_Walking_023.png",
+    1: way2+"0_Golem_Walking_004.png",
+    2: way2+"0_Golem_Walking_008.png",
+    3: way2+"0_Golem_Walking_012.png",
+    4: way2+"0_Golem_Walking_016.png",
+    5: way2+"0_Golem_Walking_020.png",
+    6: way2+"0_Golem_Walking_023.png",
+}
+
+sprite_golem_hurt = {
+    1: way2+"0_Golem_Hurt_000.png",
+    2: way2+"0_Golem_Hurt_001.png",
+    3: way2+"0_Golem_Hurt_002.png",
+    4: way2+"0_Golem_Hurt_003.png",
+    5: way2+"0_Golem_Hurt_004.png",
+    6: way2+"0_Golem_Hurt_005.png",
+    7: way2+"0_Golem_Hurt_006.png",
+    8: way2+"0_Golem_Hurt_007.png",
+    9: way2+"0_Golem_Hurt_008.png",
+    10: way2+"0_Golem_Hurt_009.png",
+    11: way2+"0_Golem_Hurt_010.png",
+    12: way2+"0_Golem_Hurt_011.png"
 }
