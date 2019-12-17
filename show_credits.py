@@ -1,5 +1,6 @@
 from all_spritess import *
 import pygame
+import sys
 pygame.init()
 
 def run_credits():
@@ -43,6 +44,7 @@ def run_credits():
 
             if event.type == pygame.QUIT:
                 run = False
+                sys.exit()
                 pygame.quit()
 
         if mouse_pressed is True:
@@ -59,7 +61,7 @@ def run_credits():
 
         if (height > -680):
             for i in range(len(text)):
-                screen.blit(font.render(text[i], True, WHITE), [150, (height + 20 + (i*40))])
+                screen.blit(font.render(text[i].rstrip("\n"), True, WHITE), [150, (height + 20 + (i*40))])
             screen.blit(muri, [130, (height + 550)])
             screen.blit(fer, [350, (height + 550)])
             screen.blit(van, [570, (height + 550)])

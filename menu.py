@@ -3,7 +3,7 @@ from vaijuninho import game
 from all_spritess import *
 import pygame
 import sounds
-pygame.mixer.pre_init(44100, 16, 2, 4096)
+# pygame.mixer.pre_init(44100, 16, 2, 4096)
 pygame.init()
 
 
@@ -40,9 +40,9 @@ button_play = load_image(s_play)
 button_credits = load_image(s_credits)
 back_menu = load_image(s_background_menu)
 name_game = load_image(n_game)
-pygame.mixer.music.load("sounds/Dream_Island.mp3")
-pygame.mixer.music.set_volume(1)
-pygame.mixer.music.play(-1)
+# pygame.mixer.music.load("sounds/Dream_Island.mp3")
+# pygame.mixer.music.set_volume(1)
+# pygame.mixer.music.play(-1)
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)

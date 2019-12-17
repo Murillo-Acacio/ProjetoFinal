@@ -5,9 +5,8 @@ vanessa = "sprites/developers/vanessa.jpeg"
 way = "sprites/Knight/"
 way2 = "sprites/golems/"
 
-s_life = "sprites/life.png"
-
 n_game = "sprites/name.png"
+s_life = "sprites/life.png"
 
 win = "sprites/win.png"
 defeat = "sprites/lost.png"
@@ -41,16 +40,16 @@ sprite_attack = {
 }
 
 sprite_death = {
-    1: way+"death1.png",
-    2: way+"death2.png",
-    3: way+"death3.png",
-    4: way+"death4.png",
-    5: way+"death5.png",
-    6: way+"death6.png",
-    7: way+"death7.png",
-    8: way+"death8.png",
-    9: way+"death9.png",
-    10: way+"death10.png"
+    1: way+"Death/death1.png",
+    2: way+"Death/death2.png",
+    3: way+"Death/death3.png",
+    4: way+"Death/death4.png",
+    5: way+"Death/death5.png",
+    6: way+"Death/death6.png",
+    7: way+"Death/death7.png",
+    8: way+"Death/death8.png",
+    9: way+"Death/death9.png",
+    10: way+"Death/death10.png"
 }
 
 sprite_idle = {
