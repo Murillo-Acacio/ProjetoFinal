@@ -59,6 +59,7 @@ def game():
     time_hit = 0
     largura_inimigo = 30
     altura_inimigo = 51
+    velo_golem = 0.3
 
     inimigo_rect = pygame.Rect(400, 300, largura_inimigo, altura_inimigo)
 
@@ -153,7 +154,7 @@ def game():
                 if mouse[1] > 395 and mouse[1] < 426:
                     run = False
             mouse_pressed = False
-        
+
         redraw_background()
 
         if status == "Running":
@@ -181,7 +182,6 @@ def game():
                         side = "right"
                     move_sprite = True
                 knight_rect = pygame.Rect(x+20, y+49, largura, altura)
-                print(knight_rect)
 
             if turn is True:
                 knight = pygame.transform.flip(knight, True, False)
@@ -229,39 +229,37 @@ def game():
             for i in range(len(list_inimigo)):
                 if pos_inimigo[i][0] != x or pos_inimigo[i][1] != y:
 
-                    velo_golem = 0.3
+                    if pos_inimigo[i][0] > x + 20:
+                        if pos_inimigo[i][1] < y + 20:
+                            pos_inimigo[i][0] -= velo_golem
+                            pos_inimigo[i][1] += velo_golem
 
+                        if pos_inimigo[i][1] > y + 20:
+                            pos_inimigo[i][0] -= velo_golem
+                            pos_inimigo[i][1] -= velo_golem
 
-                    # if pos_inimigo[i][0] > x + 20:
-                    #     if pos_inimigo[i][1] < y + 20:
-                    #         pos_inimigo[i][0] -= velo_golem
-                    #         pos_inimigo[i][1] += velo_golem
+                    elif pos_inimigo[i][0] < x + 20:
+                        if pos_inimigo[i][1] < y + 20:
+                            pos_inimigo[i][0] += velo_golem
+                            pos_inimigo[i][1] += velo_golem
 
-                    #     if pos_inimigo[i][1] > y + 20:
-                    #         pos_inimigo[i][0] -= velo_golem
-                    #         pos_inimigo[i][1] -= velo_golem
+                        if pos_inimigo[i][1] > y + 20:
+                            pos_inimigo[i][0] += velo_golem
+                            pos_inimigo[i][1] -= velo_golem
 
-                    # elif pos_inimigo[i][0] < x + 20:
-                    #     if pos_inimigo[i][1] < y + 20:
-                    #         pos_inimigo[i][0] += velo_golem
-                    #         pos_inimigo[i][1] += velo_golem
+                    elif pos_inimigo[i][0] == x:
+                        if y - pos_inimigo[i][1] > 0:
+                            pos_inimigo[i][1] += velo_golem
 
-                    #     if pos_inimigo[i][1] > y + 20:
-                    #         pos_inimigo[i][0] += velo_golem
-                    #         pos_inimigo[i][1] -= velo_golem
-                    
-                    # elif pos_inimigo[i][0] == x:
-                    #     if y - pos_inimigo[i][1] > 0:
-                    #         pos_inimigo[i][1] += velo_golem
+                        if y - pos_inimigo[i][1] < 0:
+                            pos_inimigo[i][1] -= velo_golem
 
-                    #     if y - pos_inimigo[i][1] < 0:
-                    #         pos_inimigo[i][1] -= velo_golem
+                    elif pos_inimigo[i][1] == y:
+                        if x - pos_inimigo[i][0] > 0:
+                            pos_inimigo[i][0] += velo_golem
+                        if x - pos_inimigo[i][0] < 0:
+                            pos_inimigo[i][0] -= velo_golem
 
-                    # elif pos_inimigo[i][1] == y:
-                    #     if x - pos_inimigo[i][0] > 0:
-                    #         pos_inimigo[i][0] += velo_golem
-                    #     if x - pos_inimigo[i][0] < 0:
-                    #         pos_inimigo[i][0] -= velo_golem
                     list_inimigo_rect[i] = pygame.Rect(pos_inimigo[i][0], pos_inimigo[i][1], largura_inimigo, altura_inimigo)
 
             for i in range(len(list_inimigo)):
